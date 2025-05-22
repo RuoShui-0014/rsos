@@ -1,0 +1,29 @@
+import("//build/toolchain/nasm_rules.gni")
+
+#nasm_binary("mbr") {
+#    sources = [
+#        "boot/mbr.asm",
+#        "boot/include/boot.inc"
+#    ]  # 确保 sources 是数组
+#}
+
+action("create_img") {
+    script = "tool/run_cmd.py"
+
+    inputs = []
+    outputs = [ "${target_out_dir}/master.img" ]
+
+    args = [
+        "dd",
+        "bs=512",
+        "count=32768",
+        "if=/dev/zero",
+        "of=" + rebase_path("${target_out_dir}/master.img", root_build_dir),
+    ]
+}
+
+group("all") {
+    deps = [
+        ":create_img",
+    ]
+}

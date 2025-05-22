@@ -1,0 +1,22 @@
+# nasm_rules.gni（修正后）
+template("nasm_binary") {
+    source_list = invoker.sources
+    source_file = source_list[0]
+
+    output_dir = "$target_out_dir"
+    output_bin = "$output_dir/${target_name}.bin"
+
+    # 直接定义 action 目标
+    action(target_name) {
+        script = "nasm"
+        inputs = [ source_file ]
+        outputs = [ output_bin ]
+
+        args = [
+            "-I" + rebase_path("boot/include/", root_build_dir),
+            "-f bin",
+            "-o " + rebase_path(output_bin, root_build_dir),
+            rebase_path(source_file, root_build_dir)
+        ]
+    }
+}

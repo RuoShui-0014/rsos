@@ -1,0 +1,1 @@
+bximage -q -hd=16 -func=create -sectsize=512 -imgmode=flat out/master.img

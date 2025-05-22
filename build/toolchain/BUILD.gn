@@ -1,0 +1,24 @@
+toolchain("defaul_compile"){
+
+    tool("asm") {
+        command = "nasm -o {{output}} {{source}}"
+        outputs = [ "{{source_out_dir}}/{{source_name_part}}.bin" ]
+        description = "ASM {{source}}"
+    }
+
+    tool("link") {
+        command = "nasm {{inputs}} {{ldflags}} -o {{output}}"
+#        outputs = [ "{{output}}" ]
+    }
+
+    tool("stamp") {
+        command = "touch {{output}}"
+        description = "STAMP {{output}}"
+    }
+
+    tool("copy") {
+        command = "cp -af {{source}} {{output}}"
+        description = "COPY {{source}} {{output}}"
+    }
+
+}
